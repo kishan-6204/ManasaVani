@@ -180,7 +180,7 @@ let globalUtterance = new SpeechSynthesisUtterance(); // Global scope
                         console.log('Speech recognition not supported.');
                     }
                 
-                    const apiKey = "AIzaSyD01pJgYoEofr7XWL76-6jxshTHVSyFLvI";
+                    const apiKey = "YOUR_API_KEY";
                     let conversationHistory = [];
                 
                     userInputElement.addEventListener('keydown', (event) => {
