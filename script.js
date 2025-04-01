@@ -252,7 +252,7 @@ let globalUtterance = new SpeechSynthesisUtterance(); // Global scope
                             const cleanedResponse = geminiResponse.replace(/\*/g, '');
                     
                             if (emojiExpression) {
-                                emojiElement.src = `${emojiExpression.expression}.svg`;
+                                emojiElement.src = `assets/${emojiExpression.expression}.svg`;
                             }
                     
                             conversationHistory.push({ role: 'model', parts: [{ text: cleanedResponse }] });
