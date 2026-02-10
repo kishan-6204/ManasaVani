@@ -82,8 +82,35 @@ let globalUtterance = new SpeechSynthesisUtterance(); // Global scope
                     stopButton.id = 'stopButton';
                     stopButton.style.display = 'none';
                     voiceButton.parentNode.insertBefore(stopButton, voiceButton.nextSibling);
+
+                    const chatHint = document.getElementById('chatHint');
+                    let isAuthenticated = false;
+                    let lang = languageSelect.value;
                 
                     let isListening = false;
+                    function updateChatAccess() {
+                        userInputElement.disabled = !isAuthenticated;
+                        sendButton.disabled = !isAuthenticated;
+                        voiceButton.disabled = !isAuthenticated;
+
+                        if (chatHint) {
+                            chatHint.textContent = isAuthenticated
+                                ? "You're all set. Start chatting whenever you're ready."
+                                : "Sign in to enable chat and voice features.";
+                        }
+
+                        if (!isAuthenticated) {
+                            userInputElement.value = '';
+                        }
+                    }
+
+                    updateChatAccess();
+
+                    window.addEventListener('auth-state-changed', (event) => {
+                        isAuthenticated = event.detail?.isAuthenticated || false;
+                        updateChatAccess();
+                    });
+
                     languageSelect.addEventListener("change", (e) => {
                         stopSpeech();
                         setTimeout(() => {
@@ -95,7 +122,7 @@ let globalUtterance = new SpeechSynthesisUtterance(); // Global scope
                     });
                     sendButton.addEventListener("click", () => {
                         setTimeout(() => {
-                            speakText(text, lang);
+                            speakText(userInputElement.value, lang);
                         },200)
                     });
                     if ('webkitSpeechRecognition' in window) {
@@ -232,6 +259,14 @@ let globalUtterance = new SpeechSynthesisUtterance(); // Global scope
                     }
                     
                     async function sendMessage() {
+                        if (!isAuthenticated) {
+                            if (chatHint) {
+                                chatHint.textContent = 'Please login or create an account to start chatting.';
+                            }
+                            window.openAuthModal?.('signin');
+                            return;
+                        }
+
                         const selectedLanguage = languageSelect.value;
                         const userPrompt = userInputElement.value;
                         if (!userPrompt) return;
