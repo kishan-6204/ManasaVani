@@ -1,0 +1,64 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 25, 36, 0.45);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.modal {
+  width: min(480px, 100%);
+  border-radius: 24px;
+  background: linear-gradient(155deg, #d9d3f8, #cfc8f3);
+  box-shadow: 0 24px 48px rgba(20, 20, 34, 0.32);
+  padding: 28px;
+  position: relative;
+  text-align: center;
+}
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+}
+.mascot { font-size: 66px; }
+.text {
+  max-width: 320px;
+  margin: 6px auto 18px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #181526;
+}
+.googleBtn,
+.emailBtn,
+.form button {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 10px;
+}
+.googleBtn,
+.emailBtn { background: #fff; }
+.form {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+.form input {
+  border: 1px solid rgba(38, 37, 53, 0.25);
+  border-radius: 12px;
+  padding: 10px;
+}
+.form button[type='submit'] {
+  background: #1e1e22;
+  color: #fff;
+}
+.toggleMode {
+  background: transparent !important;
+  text-decoration: underline;
+}
+.error { color: #9d102f; margin: 0; font-size: 0.86rem; }
