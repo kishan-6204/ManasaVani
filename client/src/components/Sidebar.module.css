@@ -1,0 +1,61 @@
+.sidebar {
+  background: var(--bg-accent);
+  border-right: 1px solid rgba(81, 81, 104, 0.16);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 18px;
+}
+.brand {
+  border: none;
+  background: transparent;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+}
+.brand span { font-size: 2rem; }
+.brand strong { color: var(--text-primary); font-size: 1.1rem; }
+.brand p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+
+.newChat {
+  margin-top: 26px;
+  border: none;
+  border-radius: 999px;
+  padding: 12px;
+  background: #a9a0ee;
+  color: white;
+  font-weight: 700;
+}
+
+.menu {
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+}
+.menu button {
+  border: none;
+  border-radius: 12px;
+  padding: 11px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.userCard {
+  margin-top: 14px;
+  border-top: 1px solid rgba(81, 81, 104, 0.16);
+  padding-top: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: #8f87d8;
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.userCard p { margin: 0; font-weight: 600; color: var(--text-primary); }
+.userCard span { color: var(--text-muted); font-size: 0.85rem; }

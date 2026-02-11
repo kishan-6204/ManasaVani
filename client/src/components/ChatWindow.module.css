@@ -1,0 +1,23 @@
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 30px 28px 24px;
+  gap: 20px;
+  position: relative;
+}
+.content {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.greeting {
+  align-self: center;
+  background: var(--bg-surface);
+  border-radius: 20px;
+  padding: 22px 26px;
+  box-shadow: 0 10px 25px rgba(19, 20, 31, 0.08);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+}

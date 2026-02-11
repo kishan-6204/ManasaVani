@@ -1,0 +1,23 @@
+.bubble {
+  max-width: min(70%, 680px);
+  border-radius: 20px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 24px rgba(26, 22, 46, 0.08);
+}
+.bubble p { margin: 0; line-height: 1.5; color: var(--text-primary); }
+.user {
+  align-self: flex-end;
+  background: #d8e6ff;
+  border-bottom-right-radius: 8px;
+}
+.bot {
+  align-self: flex-start;
+  background: var(--bg-surface);
+  border-bottom-left-radius: 8px;
+}
+.badge {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}

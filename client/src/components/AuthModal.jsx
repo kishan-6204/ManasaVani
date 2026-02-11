@@ -1,29 +1,27 @@
 import { useState } from 'react';
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import styles from './AuthModal.module.css';
 
-function AuthModal({ open, mode, onClose, onModeChange }) {
+function AuthModal({ open, onClose }) {
+  const [emailMode, setEmailMode] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [error, setError] = useState('');
 
   if (!open) return null;
 
-  const isSignup = mode === 'signup';
-
-  const handleSubmit = async (event) => {
+  const submitEmail = async (event) => {
     event.preventDefault();
     setError('');
-
     try {
-      if (isSignup) {
+      if (isSignUp) {
         await createUserWithEmailAndPassword(auth, email, password);
       } else {
         await signInWithEmailAndPassword(auth, email, password);
@@ -34,7 +32,7 @@ function AuthModal({ open, mode, onClose, onModeChange }) {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const continueWithGoogle = async () => {
     setError('');
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
@@ -45,60 +43,29 @@ function AuthModal({ open, mode, onClose, onModeChange }) {
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-        <h2>{isSignup ? 'Create your account' : 'Welcome back'}</h2>
-        <p className="muted">Your mental wellness companion is ready when you are.</p>
+    <div className={styles.overlay} onClick={onClose}>
+      <section className={styles.modal} onClick={(event) => event.stopPropagation()}>
+        <button className={styles.close} onClick={onClose}>×</button>
+        <div className={styles.mascot}>🐼</div>
+        <p className={styles.text}>Don’t lose your conversations! Let’s create a profile.</p>
 
-        <form onSubmit={handleSubmit}>
-          {isSignup && (
-            <div className="row">
-              <input
-                type="text"
-                placeholder="First name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Last name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
-          )}
-          <input
-            type="email"
-            required
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            required
-            minLength={6}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {error && <p className="error-text">{error}</p>}
-          <button type="submit" className="primary-btn">
-            {isSignup ? 'Sign up' : 'Sign in'}
-          </button>
-        </form>
-
-        <button type="button" className="secondary-btn" onClick={handleGoogleSignIn}>
-          Continue with Google
+        <button className={styles.googleBtn} onClick={continueWithGoogle}>Continue with Google</button>
+        <button className={styles.emailBtn} onClick={() => setEmailMode((prev) => !prev)}>
+          Continue with Email
         </button>
 
-        <div className="switch-auth">
-          {isSignup ? 'Already have an account?' : "Don't have an account?"}
-          <button type="button" className="link-btn" onClick={() => onModeChange(isSignup ? 'signin' : 'signup')}>
-            {isSignup ? 'Sign in' : 'Sign up'}
-          </button>
-        </div>
-      </div>
+        {emailMode && (
+          <form className={styles.form} onSubmit={submitEmail}>
+            <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" required placeholder="Email" />
+            <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" required minLength={6} placeholder="Password" />
+            {error && <p className={styles.error}>{error}</p>}
+            <button type="submit">{isSignUp ? 'Create Account' : 'Continue'}</button>
+            <button type="button" className={styles.toggleMode} onClick={() => setIsSignUp((prev) => !prev)}>
+              {isSignUp ? 'Already have an account? Sign in' : "New here? Create an account"}
+            </button>
+          </form>
+        )}
+      </section>
     </div>
   );
 }
